@@ -1,7 +1,8 @@
 package com.daviddryburgh.learningspring.business.service;
 
-import java.sql.Date;
 import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -56,6 +57,31 @@ public class ReservationService {
 		for(Long id: roomReservationMap.keySet()) {
 			roomReservations.add(roomReservationMap.get(id));
 		}
+		roomReservations.sort(new Comparator<RoomReservation>() {
+			@Override
+			public int compare(RoomReservation o1, RoomReservation o2) {
+				if(o1.getRoomName() == o2.getRoomName()) {
+					return o1.getRoomNumber().compareTo(o2.getRoomNumber());
+				}
+				return o1.getRoomName().compareTo(o2.getRoomName());
+			}
+		});
 		return roomReservations;
+	}
+	
+	public List<Guest> getHotelGuests() {
+		Iterable<Guest> guests = this.guestRepository.findAll();
+		List<Guest> guestList = new ArrayList<>();
+		guests.forEach(guest ->{guestList.add(guest);});
+		guestList.sort(new Comparator<Guest>() {
+			@Override
+			public int compare(Guest o1, Guest o2) {
+				if(o1.getLastName() == o2.getLastName()) {
+					return o1.getFirstName().compareTo(o2.getFirstName());
+				}
+				return o1.getLastName().compareTo(o2.getLastName());
+			}
+		});
+		return guestList;
 	}
 }

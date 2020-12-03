@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="utf-8"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
 
-    <title>Landon Hotels</title>
+    <title>Landon Reservations</title>
 
     <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/ui-darkness/jquery-ui.css"/>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
@@ -26,16 +26,31 @@
 </nav>
 <div class="container">
     <div class="page-header">
-        <h1>Select an option</h1>
+        <h1>Welcome to the Reservations Page</h1>
     </div>
-    <a href="/guests" class="btn btn-default">Guests</a>
-    <a href="/reservations" class="btn btn-default">Reservations</a>
+    <div class="input-group">
+        <span class="input-group-addon" id="basic-addon1"><span class="glyphicon glyphicon-calendar" aria-hidden="true"></span></span>
+        <input type="text" class="form-control" id="datepicker" aria-describedby="basic-addon1"/>
+    </div>
+
+    <table class="table table-striped table-bordered">
+        <tr>
+            <td>Room</td>
+            <td>Room Number</td>
+            <td>Guest</td>
+        </tr>
+        <tr th:each="roomReservation: ${roomReservations}">
+            <td th:text="${roomReservation.roomName}">Room Name</td>
+            <td th:text="${roomReservation.roomNumber}">Room Number</td>
+            <td th:text="${roomReservation.lastName}!=null? ${roomReservation.lastName} + ', ' + ${roomReservation.firstName} : 'VACANT'">Full Name</td>
+        </tr>
+    </table>
 </div>
 <footer class="footer navbar-inverse navbar-fixed-bottom">
     <div class="container">
         <div class="row">
             <div class="col-md-4"></div>
-            <div class="col-md-4"><p class="text-muted">@Copyright 2019 Frank Moley</p></div>
+            <div class="col-md-4"><p class="text-muted">@Copyright 2017 Frank Moley</p></div>
         </div>
     </div>
 </footer>
